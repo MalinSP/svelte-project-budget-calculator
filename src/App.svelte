@@ -1,8 +1,10 @@
 <script>
 	import Navbar from "./Navbar.svelte";
-	import Title from "./Title.svelte";
+	let fruits = ["apple", "banana", "lemon"]
 </script>
 
 <Navbar />
-<Title title="add expense" />
-<Title title="expense list" />
+
+{#each fruits as item}
+<h1>fruit : {item}</h1>
+{/each}
