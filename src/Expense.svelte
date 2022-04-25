@@ -1,4 +1,6 @@
 <script>
+  import {blur, slide, scale, fade, fly} from "svelte/transition"
+  import {quintOut} from "svelte/easing"
   import { getContext } from 'svelte'
   // console.log(expense);
   // let {name, amount, id} = expense
@@ -23,7 +25,10 @@
         <i class="fas fa-caret-down" />
       </button>
     </h2>
-    {#if displayAmount}<h4>amount : ${amount}</h4>{/if}
+    {#if displayAmount}
+    <h4 transition:slide>amount : ${amount}
+    </h4>
+    {/if}
   </div>
   <div class="expense-buttons">
     <button
