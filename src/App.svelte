@@ -1,10 +1,12 @@
 <script>
-  import expensesData from './expenses'
-  let expenses = [...expensesData]
+  // import expensesData from './expenses'
+  let expenses = []
 
   let setName = ''
   let setAmount = null
   let setId = null
+
+  let isFormOpen = false
 
   $: isEditing = setId ? true : false
   $: total = expenses.reduce((acc, curr) => {
@@ -18,6 +20,15 @@
   import Totals from './Totals.svelte'
   import FormExpense from './FormExpense.svelte'
 
+  function showForm() {
+    isFormOpen = true
+  }
+  function hideForm() {
+    isFormOpen = false
+    setName = ''
+    setAmount = null
+    setId = null
+  }
   function removeExpense(id) {
     expenses = expenses.filter((item) => item.id !== id)
   }
@@ -33,6 +44,7 @@
     setId = expense.id
     setName = expense.name
     setAmount = expense.amount
+    showForm()
   }
   function editExpense({ name, amount }) {
     expenses = expenses.map((item) => {
@@ -47,16 +59,18 @@
   setContext('modify', setModifiedExpense)
 </script>
 
-<Navbar />
+<Navbar {showForm} />
 <main class="content">
-  {isEditing}
-  <FormExpense
-    {addExpense}
-    name={setName}
-    amount={setAmount}
-    {isEditing}
-    {editExpense}
-  />
+  {#if isFormOpen}
+    <FormExpense
+      {addExpense}
+      name={setName}
+      amount={setAmount}
+      {isEditing}
+      {editExpense}
+      {hideForm}
+    />
+  {/if}
   <Totals title="total expenses" {total} />
   <ExpensesList {expenses} />
   <button

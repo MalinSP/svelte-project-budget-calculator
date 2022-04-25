@@ -1,4 +1,18 @@
 <script>
+  // import { onMount, beforeUpdate, onDestroy, afterUpdate } from 'svelte'
+  // onMount(() => {
+  //   console.log('from has mounted')
+  // })
+  // beforeUpdate(() => {
+  //   console.count('before has mounted')
+  // })
+  // afterUpdate(() => {
+  //   console.count('after has mounted')
+  // })
+  // onDestroy(() => {
+  //   console.log('destroy has mounted')
+  // })
+
   import Title from './Title.svelte'
 
   export let name = ''
@@ -6,6 +20,7 @@
   export let addExpense
   export let isEditing
   export let editExpense
+  export let hideForm
 
   // $: console.log({ name, amount })
 
@@ -19,6 +34,7 @@
     }
     name = ''
     amount = null
+    hideForm()
   }
 </script>
 
@@ -43,7 +59,7 @@
       disabled={isEmpty}
       >{#if isEditing} edit expense {:else} add expense{/if}</button
     >
-    <button type="button" class="close-btn">
+    <button type="button" class="close-btn" on:click={hideForm}>
       <i class="fas fa-times" />close</button
     >
   </form>
